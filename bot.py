@@ -108,13 +108,22 @@ def build_recap(target_date, all_picks):
     partner_data = {}
     for p in partners:
         picks = [x for x in all_picks if x.get("partner","").lower() == p]
+        # Sort picks: wins first, then losses
+        picks = sorted(picks, key=lambda x: (0 if x.get("result","").upper() == "W" else 1))
         w, l, u, wr = calc_stats(picks)
         partner_data[p] = {"picks": picks, "w": w, "l": l, "units": u, "wr": wr, "sweep": did_sweep(picks)}
     sorted_partners = sorted(partner_data.items(), key=lambda x: x[1]["units"], reverse=True)
-    total_w = sum(d["w"] for _, d in sorted_partners)
-    total_l = sum(d["l"] for _, d in sorted_partners)
-    total_u = sum(d["units"] for _, d in sorted_partners)
-    total_wr = (total_w / (total_w + total_l) * 100) if (total_w + total_l) > 0 else 0
+
+    # Deduplicate picks for group total — count each unique bet only once
+    seen_bets = set()
+    unique_picks = []
+    for p in all_picks:
+        bet_key = p.get("bet","").strip().lower()
+        if bet_key not in seen_bets:
+            seen_bets.add(bet_key)
+            unique_picks.append(p)
+    total_w, total_l, total_u, total_wr = calc_stats(unique_picks)
+
     display_date = datetime.strptime(target_date, "%Y-%m-%d").strftime("%-m/%-d")
     lines = [f"🎓 **CAPPER UNIVERSITY RECAP — {display_date}** 📅", "━━━━━━━━━━━━━━━━━━━━━"]
     for name, d in sorted_partners:
@@ -123,11 +132,14 @@ def build_recap(target_date, all_picks):
         u_str = f"+{d['units']:.2f}u" if d["units"] >= 0 else f"{d['units']:.2f}u"
         sweep_badge = " 🧹 SWEEP" if d["sweep"] else ""
         lines.append(f"{emoji} **{disp}** ({u_str} | {d['w']}-{d['l']}){sweep_badge}")
-        for pick in d["picks"]:
-            res_emoji = "✅" if pick.get("result","").upper() == "W" else ("❌" if pick.get("result","").upper() == "L" else "⏳")
-            gl = float(pick.get("gain_loss") or 0)
-            gl_str = f"+{gl:.2f}u" if gl >= 0 else f"{gl:.2f}u"
-            lines.append(f"{res_emoji} {pick.get('bet','')} ({gl_str})")
+        if not d["picks"]:
+            lines.append("— No plays today")
+        else:
+            for pick in d["picks"]:
+                res_emoji = "✅" if pick.get("result","").upper() == "W" else ("❌" if pick.get("result","").upper() == "L" else "⏳")
+                gl = float(pick.get("gain_loss") or 0)
+                gl_str = f"+{gl:.2f}u" if gl >= 0 else f"{gl:.2f}u"
+                lines.append(f"{res_emoji} {pick.get('bet','')} ({gl_str})")
         lines.append("━━━━━━━━━━━━━━━━━━━━━")
     u_total_str = f"+{total_u:.2f}u" if total_u >= 0 else f"{total_u:.2f}u"
     wr_emoji = "✅" if total_wr >= 50 else "❌"
@@ -177,8 +189,7 @@ async def recap(interaction: discord.Interaction, date_str: str = None):
     recap_text, sorted_partners, total_u = build_recap(target, all_picks)
     recap_channel = bot.get_channel(RECAP_CHANNEL_ID)
     await recap_channel.send(recap_text)
-    total_w = sum(d["w"] for _, d in sorted_partners)
-    total_l = sum(d["l"] for _, d in sorted_partners)
+    total_w, total_l = sum(d["w"] for _, d in sorted_partners), sum(d["l"] for _, d in sorted_partners)
     sweepers = [name for name, d in sorted_partners if d["sweep"]]
     tier_num = get_tier(total_u, sweepers)
     if tier_num:
