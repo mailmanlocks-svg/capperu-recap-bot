@@ -47,9 +47,7 @@ UPSELL_MESSAGES = [
 PARTNER_EMOJI = {"mailman": "📬", "spade": "♠️", "pan": "🐼"}
 PARTNER_DISPLAY = {"mailman": "MAILMAN", "spade": "SPADE", "pan": "PAN"}
 
-intents = discord.Intents.default()
-intents.message_content = True
-intents.messages = True
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 bot._skip_check = lambda x, y: False
 tree = bot.tree
