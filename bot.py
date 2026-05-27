@@ -49,6 +49,7 @@ PARTNER_DISPLAY = {"mailman": "MAILMAN", "spade": "SPADE", "pan": "PAN"}
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.messages = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 tree = bot.tree
 
