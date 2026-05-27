@@ -130,6 +130,25 @@ def is_winible_bot(message):
         return True
     return False
 
+def get_prop_line(message):
+    if message.content and message.content.strip():
+        lines = message.content.strip().split("\n")
+        if len(lines) >= 2:
+            return lines[1].strip()
+        return lines[0].strip()
+    if message.embeds:
+        for embed in message.embeds:
+            if embed.title and embed.title.strip():
+                return embed.title.strip()
+            if embed.description and embed.description.strip():
+                first_line = embed.description.strip().split("\n")[0].strip()
+                if first_line:
+                    return first_line
+            for field in embed.fields:
+                if field.value and field.value.strip():
+                    return field.value.strip()
+    return None
+
 @bot.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=GUILD_ID))
@@ -137,20 +156,19 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if not is_winible_bot(message):
-        await bot.process_commands(message)
+    await bot.process_commands(message)
+    if message.channel.id in PROPS_CHANNEL_IDS:
+        print(f"MSG in props — author: {message.author.name} ({message.author.id}) | bot: {message.author.bot} | webhook: {message.webhook_id} | content: '{message.content[:50]}' | embeds: {len(message.embeds)}")
+    if not is_winible(message):
         return
     if message.channel.id not in PROPS_CHANNEL_IDS:
-        await bot.process_commands(message)
         return
-    print(f"Winible post detected — author: {message.author.name} ({message.author.id}) webhook: {message.webhook_id}")
-    lines = message.content.strip().split("\n")
-    prop_line = lines[1].strip() if len(lines) >= 2 else lines[0].strip() if lines else None
-    if not prop_line:
-        await bot.process_commands(message)
-        return
-    await message.reply(f"**{prop_line}**\n\n<@&{VIP_ROLE_ID}>", mention_author=False)
-    await bot.process_commands(message)
+    print(f"WINIBLE DETECTED — firing auto-tag")
+    prop_line = get_prop_line(message)
+    if prop_line:
+        await message.reply(f"**{prop_line}**\n\n<@&{VIP_ROLE_ID}>", mention_author=False)
+    else:
+        await message.reply(f"<@&{VIP_ROLE_ID}>", mention_author=False)
 
 @tree.command(name="recap", description="Post today's picks recap", guild=discord.Object(id=GUILD_ID))
 @app_commands.describe(date_str="Date (YYYY-MM-DD). Leave blank for today.")
