@@ -15,49 +15,72 @@ SUPABASE_KEY = "sb_publishable_yuGx5nIEZAn0YJxmYS690g_x9YjBRQz"
 RECAP_CHANNEL_ID = 1425232193361547284
 UPSELL_CHANNEL_ID = 1418679104638554274
 GUILD_ID = 1418667113467351143
+VIP_ROLE_ID = 1421280688866332675
+MEMBER_ROLE_ID = 1418679919181041846
 
-TIERS = {
-    1: {"label": "1 WEEK ACCESS", "discount": "50% OFF", "code": "TIER1", "link": "https://dubclub.win/r/p/pri-8u2hm/?checkout=1&coupon=TIER1"},
-    2: {"label": "1 MONTH ACCESS", "discount": "60% OFF", "code": "TIER2", "link": "https://dubclub.win/r/p/pri-psr7s/?checkout=1&coupon=TIER2"},
-    3: {"label": "3 MONTHS ACCESS", "discount": "70% OFF", "code": "TIER3", "link": "https://dubclub.win/r/p/pri-bc75x/?checkout=1&coupon=TIER3"},
-    4: {"label": "6 MONTHS ACCESS", "discount": "80% OFF", "code": "TIER4", "link": "https://dubclub.win/r/p/pri-8n2d8/?checkout=1&coupon=TIER4"},
-    5: {"label": "1 YEAR ACCESS", "discount": "85% OFF", "code": "TIER5", "link": "https://dubclub.win/r/p/pri-7jaaz/?checkout=1&coupon=TIER5"},
-}
+FREE_TRIAL_LINK = "https://www.winible.com/checkout/1580622055835980651?pid=1580622055848563564&c=WIN3"
 
-HEADLINES = [
-    "🚨🔥 CAPPER UNIVERSITY IS COOKING 🔥🚨",
-    "🚨💰 WE STAY CASHING 💰🚨",
-    "🚨🎯 LOCKED IN AND LOCKED ON 🎯🚨",
-    "🚨📈 THE NUMBERS DON'T LIE 📈🚨",
-    "🚨🏆 ANOTHER DAY, ANOTHER BAG 🏆🚨",
-]
-OPENERS = [
-    "We called it. We cashed it. Simple. 💰",
-    "Another day locked in, another day printing 🎯",
-    "The results speak for themselves. 📊",
-    "Day in, day out — we stay dialed. 🔒",
-    "Running it back every single day 📈",
-]
-GIVEBACKS = [
-    "To celebrate and give back to everyone tapped in —",
-    "In the spirit of the run we're on, we're dropping a deal —",
-    "Because the bag deserves to be shared —",
-    "To reward the ones who've been locked in with us —",
-    "We're feeling generous after today —",
-]
-SCARCITY = [
-    "⏰ LIMITED TIME — don't sleep on this.",
-    "⚠️ Limited spots. No re-releases. No second chances.",
-    "🔐 Lock in before this disappears.",
-    "🚨 First come, first served. No exceptions.",
-    "⏳ This deal won't last — act now.",
-]
-CLOSERS = [
-    "If you've been on the fence, this is your sign. 👀",
-    "You already saw the numbers. You know what to do. 💎",
-    "The longer you wait, the more you miss. 😤",
-    "Stop watching from the sidelines. 🎯",
-    "Your move. 🤝",
+UPSELL_MESSAGES = [
+    (
+        "# 📬 +{units}u tonight. VIP ate again.",
+        "If you're in the free chat you already saw the picks — but you didn't cash out on them. That's what VIP is for.\n\nGet your first 3 days on us and see what you've been missing 👇\n{link}"
+    ),
+    (
+        "# 🔥 We just went {record} on the night. +{units}u.",
+        "Free chat gets the recap. VIP gets the plays before the game, the reasoning, and the results delivered straight to the phone.\n\nFirst 3 days free 👇\n{link}"
+    ),
+    (
+        "# 📈 +{units}u. Another night the VIP locked in.",
+        "We post in VIP before the games tip. By the time the free chat sees it, we've already cashed.\n\nJump in free for 3 days 👇\n{link}"
+    ),
+    (
+        "# 🎯 {record} on the night. +{units}u banked.",
+        "You're already here watching. You already know we can pick. The only difference between you and VIP right now is one click.\n\nFirst 3 days on us 👇\n{link}"
+    ),
+    (
+        "# 💰 +{units}u tonight. VIP is built different.",
+        "Plays straight to your phone. Full card every day. Recaps every night. This is what VIP looks like.\n\nTry it free for 3 days 👇\n{link}"
+    ),
+    (
+        "# 🔒 {record} tonight. We stay locked in.",
+        "The free chat sees the results. VIP sees the process, the plays, and the payouts in real time.\n\nGet your first 3 days free 👇\n{link}"
+    ),
+    (
+        "# 📬 {record} on the card. +{units}u added to the bag.",
+        "Capper U VIP isn't just picks. It's a whole community of people cashing out together every night.\n\nFirst 3 days on us 👇\n{link}"
+    ),
+    (
+        "# 🏆 +{units}u. The numbers don't lie.",
+        "You've been watching from the free side. You know what we do. Come cash out with us.\n\nFirst 3 days free, no excuses 👇\n{link}"
+    ),
+    (
+        "# 🎓 Capper U VIP went {record} tonight. +{units}u.",
+        "We track every single pick. Every win, every loss, all on the record. This is what a data-driven approach looks like in action.\n\nTry VIP free for 3 days 👇\n{link}"
+    ),
+    (
+        "# 🔥 +{units}u tonight and it wasn't even close.",
+        "VIP members got these plays straight to their phone before tip off. Free chat got the recap after.\n\nFlip the script. First 3 days on us 👇\n{link}"
+    ),
+    (
+        "# 📈 {record} on the night. We keep cooking.",
+        "This isn't luck. It's process, research, and consistency. VIP is where you plug in and start cashing.\n\nGet 3 days free and find out 👇\n{link}"
+    ),
+    (
+        "# 💎 +{units}u. VIP stays winning.",
+        "Free chat is great. VIP is where the money is made. You already know the difference.\n\nFirst 3 days on us 👇\n{link}"
+    ),
+    (
+        "# 🧹 {record} tonight. Clean sweep.",
+        "Every single pick tonight cashed. VIP members felt it. Free chat saw it after the fact.\n\nDon't miss the next one. 3 days free 👇\n{link}"
+    ),
+    (
+        "# 🎯 We went {record} tonight. +{units}u on the card.",
+        "Plays delivered to your phone before games start. Full transparency on every pick. That's what VIP looks like every single day.\n\nJump in free for 3 days 👇\n{link}"
+    ),
+    (
+        "# 📬 +{units}u added to the tracker tonight.",
+        "You're already in the Discord. You're already watching. Might as well be cashing.\n\nFirst 3 days free 👇\n{link}"
+    ),
 ]
 
 PARTNER_EMOJI = {"mailman": "📬", "spade": "♠️", "pan": "🐼"}
@@ -90,31 +113,16 @@ def did_sweep(picks):
     results = [p.get("result","").upper() for p in picks]
     return all(r == "W" for r in results)
 
-def get_tier(group_units, sweepers):
-    if len(sweepers) >= 2:
-        return 5
-    if len(sweepers) == 1:
-        return 4
-    if group_units >= 3:
-        return 3
-    if group_units >= 2:
-        return 2
-    if group_units >= 1:
-        return 1
-    return None
-
 def build_recap(target_date, all_picks):
     partners = ["mailman", "spade", "pan"]
     partner_data = {}
     for p in partners:
         picks = [x for x in all_picks if x.get("partner","").lower() == p]
-        # Sort picks: wins first, then losses
         picks = sorted(picks, key=lambda x: (0 if x.get("result","").upper() == "W" else 1))
         w, l, u, wr = calc_stats(picks)
         partner_data[p] = {"picks": picks, "w": w, "l": l, "units": u, "wr": wr, "sweep": did_sweep(picks)}
     sorted_partners = sorted(partner_data.items(), key=lambda x: x[1]["units"], reverse=True)
 
-    # Deduplicate picks for group total — count each unique bet only once
     seen_bets = set()
     unique_picks = []
     for p in all_picks:
@@ -140,37 +148,19 @@ def build_recap(target_date, all_picks):
                 gl = float(pick.get("gain_loss") or 0)
                 gl_str = f"+{gl:.2f}u" if gl >= 0 else f"{gl:.2f}u"
                 lines.append(f"{res_emoji} {pick.get('bet','')} ({gl_str})")
-        lines.append("━━━━━━━━━━━━━━━━━━━━━")
+    lines.append("━━━━━━━━━━━━━━━━━━━━━")
     u_total_str = f"+{total_u:.2f}u" if total_u >= 0 else f"{total_u:.2f}u"
     wr_emoji = "✅" if total_wr >= 50 else "❌"
     lines.append(f"📊 **CAPPER U TODAY:** {u_total_str} | {total_w}-{total_l} | {total_wr:.0f}% {wr_emoji}")
-    lines.append("<@&1421280688866332675>")
-    return "\n".join(lines), sorted_partners, total_u
+    lines.append(f"<@&{VIP_ROLE_ID}>")
+    return "\n".join(lines), sorted_partners, total_u, total_w, total_l
 
-def build_upsell(tier_num, sorted_partners, total_u, total_w, total_l, sweepers):
-    tier = TIERS[tier_num]
-    headline = random.choice(HEADLINES)
-    opener = random.choice(OPENERS)
-    giveback = random.choice(GIVEBACKS)
-    scarcity = random.choice(SCARCITY)
-    closer = random.choice(CLOSERS)
-    u_str = f"+{total_u:.2f}u" if total_u >= 0 else f"{total_u:.2f}u"
-    lines = [headline, "", opener, "", f"We went **{total_w}-{total_l}** today and pocketed **{u_str}** 👇", ""]
-    for name, d in sorted_partners:
-        if not d["picks"]: continue
-        emoji = PARTNER_EMOJI.get(name, "")
-        disp = PARTNER_DISPLAY.get(name, name.upper())
-        du = f"+{d['units']:.2f}u" if d["units"] >= 0 else f"{d['units']:.2f}u"
-        sweep_tag = " 🧹 SWEEP" if d["sweep"] else ""
-        lines.append(f"{emoji} **{disp}**{sweep_tag} — {du} | {d['w']}-{d['l']} | {d['wr']:.0f}% WR")
-    if sweepers:
-        lines.append("")
-        sweep_names = " & ".join([PARTNER_DISPLAY.get(s, s.upper()) for s in sweepers])
-        lines.append(f"🧹 **{sweep_names} SWEPT** — hit every single pick today!")
-    lines += ["", giveback, "We're dropping a limited deal to celebrate 👇", "", f"💎 **{tier['discount']} — {tier['label']}** 💎", "", scarcity, f"🎟️ Code: `{tier['code']}`", f"👉 {tier['link']}", ""]
-    lines.append("<@&1418679919181041846>")
-    lines.append(closer)
-    return "\n".join(lines)
+def build_upsell(total_u, total_w, total_l):
+    record = f"{total_w}-{total_l}"
+    header_template, body_template = random.choice(UPSELL_MESSAGES)
+    header = header_template.format(units=f"{total_u:.1f}", record=record)
+    body = body_template.format(units=f"{total_u:.1f}", record=record, link=FREE_TRIAL_LINK)
+    return f"{header}\n\n{body}\n\n<@&{MEMBER_ROLE_ID}>"
 
 @bot.event
 async def on_ready():
@@ -186,18 +176,15 @@ async def recap(interaction: discord.Interaction, date_str: str = None):
     if not all_picks:
         await interaction.followup.send(f"No picks found for {target}.", ephemeral=True)
         return
-    recap_text, sorted_partners, total_u = build_recap(target, all_picks)
+    recap_text, sorted_partners, total_u, total_w, total_l = build_recap(target, all_picks)
     recap_channel = bot.get_channel(RECAP_CHANNEL_ID)
     await recap_channel.send(recap_text)
-    total_w, total_l = sum(d["w"] for _, d in sorted_partners), sum(d["l"] for _, d in sorted_partners)
-    sweepers = [name for name, d in sorted_partners if d["sweep"]]
-    tier_num = get_tier(total_u, sweepers)
-    if tier_num:
-        upsell_text = build_upsell(tier_num, sorted_partners, total_u, total_w, total_l, sweepers)
+    if total_u >= 1.0:
+        upsell_text = build_upsell(total_u, total_w, total_l)
         upsell_channel = bot.get_channel(UPSELL_CHANNEL_ID)
         await upsell_channel.send(upsell_text)
-        await interaction.followup.send(f"✅ Recap posted! Tier {tier_num} upsell fired.", ephemeral=True)
+        await interaction.followup.send(f"✅ Recap posted! Upsell fired (+{total_u:.2f}u threshold met).", ephemeral=True)
     else:
-        await interaction.followup.send("✅ Recap posted. No upsell today.", ephemeral=True)
+        await interaction.followup.send("✅ Recap posted. No upsell today (under +1u threshold).", ephemeral=True)
 
 bot.run(DISCORD_TOKEN)
