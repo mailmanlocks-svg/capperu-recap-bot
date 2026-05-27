@@ -20,6 +20,14 @@ MEMBER_ROLE_ID = 1418679919181041846
 
 FREE_TRIAL_LINK = "https://www.winible.com/checkout/1580622055835980651?pid=1580622055848563564&c=WIN3"
 
+WINIBLE_BOT_ID = 1169619508382683238
+PROPS_CHANNEL_IDS = [
+    1437289118517428356,  # NBA Props
+    1437289161911435324,  # MLB Props
+    1502417916258422905,  # WNBA Props
+    1437289059860086875,  # NFL Props
+]
+
 UPSELL_MESSAGES = [
     (
         "# 📬 +{units}u tonight. VIP ate again.",
@@ -166,6 +174,30 @@ def build_upsell(total_u, total_w, total_l):
 async def on_ready():
     await tree.sync(guild=discord.Object(id=GUILD_ID))
     print(f"Bot ready as {bot.user}")
+
+@bot.event
+async def on_message(message):
+    # Only fire for Winible Bot posts in props channels
+    if message.author.id != WINIBLE_BOT_ID:
+        await bot.process_commands(message)
+        return
+    if message.channel.id not in PROPS_CHANNEL_IDS:
+        await bot.process_commands(message)
+        return
+
+    # Extract the second line (prop line with player name, odds, units)
+    lines = message.content.strip().split("\n")
+    if len(lines) >= 2:
+        prop_line = lines[1].strip()
+    elif len(lines) == 1:
+        prop_line = lines[0].strip()
+    else:
+        await bot.process_commands(message)
+        return
+
+    # Reply with bold prop line + VIP tag
+    await message.reply(f"**{prop_line}**\n\n<@&{VIP_ROLE_ID}>", mention_author=False)
+    await bot.process_commands(message)
 
 @tree.command(name="recap", description="Post today's picks recap", guild=discord.Object(id=GUILD_ID))
 @app_commands.describe(date_str="Date (YYYY-MM-DD). Leave blank for today.")
