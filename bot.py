@@ -51,6 +51,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.messages = True
 bot = commands.Bot(command_prefix="!", intents=intents)
+bot._skip_check = lambda x, y: False
 tree = bot.tree
 
 async def fetch_picks(target_date):
