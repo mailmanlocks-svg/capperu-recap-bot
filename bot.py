@@ -156,7 +156,7 @@ def build_recap(target_date, all_picks):
                 gl = float(pick.get("gain_loss") or 0)
                 gl_str = f"+{gl:.2f}u" if gl >= 0 else f"{gl:.2f}u"
                 lines.append(f"{res_emoji} {pick.get('bet','')} ({gl_str})")
-    lines.append("━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("━━━━━━━━━━━━━━━━━━━━━")
     u_total_str = f"+{total_u:.2f}u" if total_u >= 0 else f"{total_u:.2f}u"
     wr_emoji = "✅" if total_wr >= 50 else "❌"
     lines.append(f"📊 **CAPPER U TODAY:** {u_total_str} | {total_w}-{total_l} | {total_wr:.0f}% {wr_emoji}")
@@ -177,15 +177,12 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    # Only fire for Winible Bot posts in props channels
     if message.author.id != WINIBLE_BOT_ID:
         await bot.process_commands(message)
         return
     if message.channel.id not in PROPS_CHANNEL_IDS:
         await bot.process_commands(message)
         return
-
-    # Extract the second line (prop line with player name, odds, units)
     lines = message.content.strip().split("\n")
     if len(lines) >= 2:
         prop_line = lines[1].strip()
@@ -194,8 +191,6 @@ async def on_message(message):
     else:
         await bot.process_commands(message)
         return
-
-    # Reply with bold prop line + VIP tag
     await message.reply(f"**{prop_line}**\n\n<@&{VIP_ROLE_ID}>", mention_author=False)
     await bot.process_commands(message)
 
