@@ -20,6 +20,36 @@ MEMBER_ROLE_ID = 1418679919181041846
 
 FREE_TRIAL_LINK = "https://www.winible.com/checkout/1580622055835980651?pid=1580622055848563564&c=WIN3"
 
+TIER_DMS = {
+    "Freshman": (
+        "🎓 You just reached Freshman level at Capper U! The more you chat and interact with the community, "
+        "the more you climb the ranks. Hit Sophomore level to unlock your first exclusive reward and keep "
+        "moving up all the way to the Grad tier where even bigger things are waiting 👀"
+    ),
+    "Sophmore": (
+        "📚 You just reached Sophomore level at Capper U! You're climbing the ranks and we see you. "
+        "Here's your reward, 3 days of VIP on us. Get in and see what you've been missing 👇\n"
+        "https://www.winible.com/checkout/1580622055835980651?pid=1580622055848563564&c=SOMPHMORE"
+    ),
+    "Junior": (
+        "🎯 You just reached Junior level at Capper U! The grind is paying off. "
+        "Here's a full free week of VIP on us 👇\n"
+        "https://www.winible.com/checkout/1580622055835980651?pid=1580622851642249977&c=JUNIOR"
+    ),
+    "Senior": (
+        "🏆 You just reached Senior level at Capper U! You're one of the realest ones in the server. "
+        "Here's your reward, an entire month of VIP for just $7. One time, never shared publicly, just for you 👇\n"
+        "https://www.winible.com/checkout/1580622055835980651?pid=1580622851642249977&c=SENIOR"
+    ),
+    "Grad": (
+        "👨‍🎓 YOU GRADUATED. You've earned it and you now have exclusive access to the Grad Lounge channel "
+        "in the Discord. This channel is reserved exclusively for members who have reached the Graduate tier. "
+        "Inside you'll get exclusive access to MailMan, Spade and Pan directly, early info drops, giveaways, "
+        "and content that hasn't been shared anywhere else. See you in there 🎓"
+    ),
+}
+
+
 WINIBLE_BOT_ID = 1169619508382683238
 PROPS_CHANNEL_IDS = [
     1437289118517428356,
@@ -151,6 +181,22 @@ def get_prop_line(message):
 async def on_ready():
     await tree.sync(guild=discord.Object(id=GUILD_ID))
     print(f"Bot ready as {bot.user}")
+
+@bot.event
+async def on_member_update(before, after):
+    new_roles = [r for r in after.roles if r not in before.roles]
+    for role in new_roles:
+        role_name = role.name
+        if role_name in TIER_DMS:
+            print(f"Tier role detected: {role_name} for {after.name}")
+            dm_message = TIER_DMS[role_name]
+            try:
+                await after.send(dm_message)
+                print(f"DM sent to {after.name} for reaching {role_name}")
+            except discord.Forbidden:
+                print(f"Could not DM {after.name} — DMs may be disabled")
+            except Exception as e:
+                print(f"Error DMing {after.name}: {e}")
 
 @bot.event
 async def on_message(message):
