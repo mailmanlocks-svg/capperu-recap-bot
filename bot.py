@@ -39,7 +39,8 @@ TIER_DMS = {
     "Senior": (
         "🏆 You just reached Senior level at Capper U! You're one of the realest ones in the server. "
         "Here's your reward, an entire month of VIP for just $7. One time, never shared publicly, just for you 👇\n"
-        "https://www.winible.com/checkout/1580622055835980651?pid=1580622851642249977&c=SENIOR"
+        "https://www.winible.com/checkout/1580622055835980651?pid=1580622851642249977&c=SENIOR\n\n"
+        "We recommend using this link towards the end of your current subscription as it will create a new subscription in order to maximize the amount of days you receive."
     ),
     "Grad": (
         "👨‍🎓 YOU GRADUATED. You've earned it and you now have exclusive access to the Grad Lounge channel "
