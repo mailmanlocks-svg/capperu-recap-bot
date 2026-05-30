@@ -20,6 +20,8 @@ MEMBER_ROLE_ID = 1418679919181041846
 
 FREE_TRIAL_LINK = "https://www.winible.com/checkout/1580622055835980651?pid=1580622055848563564&c=WIN3"
 
+TIER_ORDER = ["Freshman", "Sophmore", "Junior", "Senior", "Grad"]
+
 TIER_DMS = {
     "Freshman": (
         "🎓 You just reached Freshman level at Capper U! The more you chat and interact with the community, "
@@ -186,10 +188,18 @@ async def on_ready():
 @bot.event
 async def on_member_update(before, after):
     new_roles = [r for r in after.roles if r not in before.roles]
+    before_role_names = [r.name for r in before.roles]
     for role in new_roles:
         role_name = role.name
-        if role_name in TIER_DMS:
-            print(f"Tier role detected: {role_name} for {after.name}")
+        if role_name not in TIER_DMS:
+            continue
+        before_tier_index = -1
+        for i, tier in enumerate(TIER_ORDER):
+            if tier in before_role_names:
+                before_tier_index = i
+        new_tier_index = TIER_ORDER.index(role_name)
+        if new_tier_index > before_tier_index:
+            print(f"Tier upgrade detected: {role_name} for {after.name}")
             dm_message = TIER_DMS[role_name]
             try:
                 await after.send(dm_message)
@@ -198,6 +208,8 @@ async def on_member_update(before, after):
                 print(f"Could not DM {after.name} — DMs may be disabled")
             except Exception as e:
                 print(f"Error DMing {after.name}: {e}")
+        else:
+            print(f"Skipping DM for {after.name} — {role_name} is not a new tier upgrade")
 
 @bot.event
 async def on_message(message):
